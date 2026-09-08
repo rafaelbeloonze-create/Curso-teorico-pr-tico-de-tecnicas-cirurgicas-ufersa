@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I Curso de Técnicas Cirúrgicas - UFERSA</title>
+  
+  <!-- FAVICON (Ícone da Aba do Navegador) -->
+  <link rel="icon" href="https://i.postimg.cc/jLSzxsqv/logo.jpg" type="image/jpeg">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Montserrat', sans-serif; background-color: #0f172a; }
+    /* Animação suave ao trocar de aba */
+    .fade-in { animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    
+    /* Ocultar barra de rolagem do carrossel mas manter a funcionalidade */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="min-h-screen text-slate-100 flex flex-col relative">
+
+  <!-- Header / Menu de Navegação COM EFEITO VIDRO FOSCO (backdrop-blur-md) -->
+  <header class="bg-[#0A2942]/90 backdrop-blur-md border-b border-slate-700 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center relative">
+      <div class="flex items-center gap-2">
+        <span class="bg-[#2D6A4F] text-white font-bold text-xs uppercase px-2.5 py-1 rounded">UFERSA</span>
+        <h1 class="font-bold text-sm md:text-base tracking-wide uppercase">Técnicas Cirúrgicas</h1>
+      </div>
+      
+      <!-- Botão Menu Hambúrguer (Mobile) -->
+      <button onclick="toggleMenu()" class="text-white hover:text-emerald-400 transition focus:outline-none flex items-center gap-2 lg:hidden">
+        <span class="font-semibold text-sm hidden sm:block">Menu</span>
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+      <!-- Menu Principal (Desktop) -->
+      <nav class="hidden lg:flex gap-4 text-sm font-semibold">
+        <button id="nav-desktop-inicio" onclick="mudarAba('inicio')" class="nav-btn-desktop px-2 py-1 text-emerald-400 border-b-2 border-emerald-400 transition">Início</button>
+        <button id="nav-desktop-avisos" onclick="mudarAba('avisos')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Avisos e Local</button>
+        <button id="nav-desktop-centrocirurgico" onclick="mudarAba('centrocirurgico')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Ambiente Cirúrgico</button>
+        <button id="nav-desktop-paramentacao" onclick="mudarAba('paramentacao')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Paramentação</button>
+        <button id="nav-desktop-instrumentacao" onclick="mudarAba('instrumentacao')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Instrumentação</button>
+        <button id="nav-desktop-nos" onclick="mudarAba('nos')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Nós</button>
+        <button id="nav-desktop-anestesia" onclick="mudarAba('anestesia')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Anestesia</button>
+        <button id="nav-desktop-sutura" onclick="mudarAba('sutura')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Sutura</button>
+        <button id="nav-desktop-intubacao" onclick="mudarAba('intubacao')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Intubação</button>
+      </nav>
+
+      <!-- Menu Suspenso (Dropdown Mobile) -->
+      <nav id="menu-suspenso" class="hidden absolute right-4 top-16 bg-[#0A2942]/95 backdrop-blur-xl border border-slate-600 rounded-lg shadow-2xl flex-col w-56 overflow-hidden z-50 lg:hidden">
+        <button id="nav-mobile-inicio" onclick="mudarAba('inicio')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold bg-slate-700 text-emerald-400 transition border-b border-slate-700">Início</button>
+        <button id="nav-mobile-avisos" onclick="mudarAba('avisos')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Avisos e Local</button>
+        <button id="nav-mobile-centrocirurgico" onclick="mudarAba('centrocirurgico')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Ambiente Cirúrgico</button>
+        <button id="nav-mobile-paramentacao" onclick="mudarAba('paramentacao')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Paramentação</button>
+        <button id="nav-mobile-instrumentacao" onclick="mudarAba('instrumentacao')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Instrumentação</button>
+        <button id="nav-mobile-nos" onclick="mudarAba('nos')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Nós</button>
+        <button id="nav-mobile-anestesia" onclick="mudarAba('anestesia')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Anestesia</button>
+        <button id="nav-mobile-sutura" onclick="mudarAba('sutura')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Sutura</button>
+        <button id="nav-mobile-intubacao" onclick="mudarAba('intubacao')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition">Intubação</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Área Principal de Conteúdo -->
+  <main class="flex-grow max-w-5xl w-full mx-auto p-4 md:p-8">
+
+    <!-- ABA: INÍCIO -->
+    <div id="inicio" class="aba-conteudo fade-in space-y-8 block">
+      
+      <!-- Card Principal -->
+      <section class="bg-[#0A2942] rounded-2xl shadow-xl p-8 md:p-12 border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="space-y-4 max-w-xl">
+          <span class="bg-[#2D6A4F] text-white text-xs font-bold uppercase px-3 py-1 rounded-full">
+            Curso Teórico-Prático • 40 Horas
+          </span>
+          <h2 class="text-2xl md:text-4xl font-extrabold uppercase leading-tight">
+            I Curso de Iniciação de Técnicas Cirúrgicas
+          </h2>
+          <p class="text-slate-300 text-sm md:text-base">
+            Promovido pela Semioliga e LATC da UFERSA. Fundamentos essenciais para a formação médica inicial.
+          </p>
+        </div>
+        <!-- Logo do Curso -->
+        <img src="https://i.postimg.cc/jLSzxsqv/logo.jpg" alt="Logo do Curso" class="w-40 h-40 rounded-full border-4 border-slate-600 object-cover bg-white shadow-xl">
+      </section>
+
+      <!-- BLOCO BEM-VINDOS -->
+      <section class="bg-gradient-to-r from-[#0A2942] to-[#2D6A4F] rounded-2xl shadow-xl p-10 md:p-16 border border-slate-600 text-center flex flex-col items-center justify-center">
+        <h2 class="text-4xl md:text-6xl font-extrabold text-white uppercase tracking-widest drop-shadow-md">
+          Bem-vindos
+        </h2>
+        <div class="w-24 h-1 bg-emerald-400 rounded-full mt-6 mb-6"></div>
+        <p class="text-slate-200 text-base md:text-lg max-w-2xl font-medium">
+          Estamos muito felizes em ter você conosco! Aproveite todo o conteúdo teórico e prático preparado com excelência para o seu aprendizado.
+        </p>
+      </section>
+
+      <!-- BLOCO CRONOGRAMA PRÁTICO -->
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-10 border border-slate-700 shadow-lg">
+        <h3 class="text-2xl md:text-3xl font-bold text-emerald-400 uppercase mb-8 text-center tracking-wide">Cronograma Prático</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          
+          <!-- Sábado -->
+          <div class="bg-slate-900/60 rounded-xl p-6 border-l-4 border-emerald-500 shadow-md hover:bg-slate-900 transition duration-300">
+            <div class="flex items-center gap-4 mb-5">
+              <div class="bg-[#0A2942] p-3 rounded-lg text-emerald-400 border border-slate-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-slate-100 uppercase">Sábado</h4>
+                <p class="text-sm text-emerald-400 font-semibold tracking-wider">17/10/2026 • 08h às 12h</p>
+              </div>
+            </div>
+            <ul class="space-y-3 text-slate-300 text-sm md:text-base">
+              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Lavagem de mãos</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Paramentação</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Instrumentação</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Ponto simples</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Ponto em X</li>
+            </ul>
+          </div>
+
+          <!-- Domingo -->
+          <div class="bg-slate-900/60 rounded-xl p-6 border-l-4 border-emerald-500 shadow-md hover:bg-slate-900 transition duration-300">
+            <div class="flex items-center gap-4 mb-5">
+              <div class="bg-[#0A2942] p-3 rounded-lg text-emerald-400 border border-slate-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-slate-100 uppercase">Domingo</h4>
+                <p class="text-sm text-emerald-400 font-semibold tracking-wider">18/10/2026 • 08h às 12h</p>
+              </div>
+            </div>
+            <ul class="space-y-3 text-slate-300 text-sm md:text-base">
+              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Ponto chuleio simples</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Chuleio ancorado</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Ponto em X</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Donatti</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> 2 Estações de Nós cirúrgicos</li>
+              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> 1 Estação de anestesia</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Seção: Equipe (CARROSSEL SÓ FOTOS COM NOMES E CARGOS ORDENADOS) -->
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg relative">
+        <h3 class="text-xl font-bold text-emerald-400 uppercase mb-6 text-center">Nossa Equipe de Monitores</h3>
+        
+        <div class="relative flex items-center">
+          <!-- Seta Esquerda -->
+          <button onclick="rolarCarrossel('esq')" class="absolute left-0 z-10 -ml-4 md:-ml-6 bg-[#0A2942] hover:bg-[#2D6A4F] text-white w-10 h-10 rounded-full border border-slate-500 shadow-lg flex items-center justify-center transition focus:outline-none">
+            &#10094;
+          </button>
+
+          <!-- Track do Carrossel -->
+          <div id="carrossel-equipe" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth w-full px-2 py-2">
+            
+            <!-- 01. Rafael Belo - Presidente -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/WtWd70jZ/image.jpg" alt="Rafael Belo" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Rafael Belo</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Presidente</span>
+            </div>
+
+            <!-- 02. Luis Felipe - Vice-Presidente -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/QFpDPjtX/image.jpg" alt="Luis Felipe" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Luis Felipe</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Vice-Presidente</span>
+            </div>
+
+            <!-- 03. Evelin Saad - Financeiro -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/p9q9nfKy/image.jpg" alt="Evelin Saad" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Evelin Saad</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Financeiro</span>
+            </div>
+
+            <!-- 04. Glória Maria - Financeiro -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/XGPh9G8X/image.jpg" alt="Glória Maria" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Glória Maria</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Financeiro</span>
+            </div>
+
+            <!-- 05. Ana Clara - Financeiro -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/ygjTx38j/image.jpg" alt="Ana Clara" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Ana Clara</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Financeiro</span>
+            </div>
+
+            <!-- 06. Francisco Laercio - Secretaria -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/1nY16tW5/image.jpg" alt="Francisco Laercio" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Francisco Laercio</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Secretaria</span>
+            </div>
+
+            <!-- 07. Luana Oliveira - Secretaria -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/KkD0TsJz/image.jpg" alt="Luana Oliveira" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Luana Oliveira</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Secretaria</span>
+            </div>
+
+            <!-- 08. José Bismark - Marketing -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/fJZ0Fr24/image.jpg" alt="José Bismark" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">José Bismark</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Marketing</span>
+            </div>
+
+            <!-- 09. Thais Andrade - Monitora -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/kRNRGQ5h/image.jpg" alt="Thais Andrade" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Thais Andrade</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitora</span>
+            </div>
+
+            <!-- 10. Vanessa Louyse - Monitora -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/0b1qsfn9/image.jpg" alt="Vanessa Louyse" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Vanessa Louyse</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitora</span>
+            </div>
+
+            <!-- 11. Emanuel Alves - Monitor -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/rzT6sLKF/image.jpg" alt="Emanuel Alves" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Emanuel Alves</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+            </div>
+
+            <!-- 12. Ricardo Queiroz - Monitor -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/rdz4jRfY/image.jpg" alt="Ricardo Queiroz" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Ricardo Queiroz</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+            </div>
+
+            <!-- 13. Thiago Novais - Monitor -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/mczxQRHt/image.jpg" alt="Thiago Novais" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Thiago Novais</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+            </div>
+
+            <!-- 14. Bárbara Fernanda - Monitora -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/5HwgcRcv/image.jpg" alt="Bárbara Fernanda" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Bárbara Fernanda</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitora</span>
+            </div>
+
+            <!-- 15. Yago Armando - Monitor -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/k6gbj17G/image.jpg" alt="Yago Armando" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Yago Armando</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+            </div>
+
+            <!-- 16. Arquimedes Maia - Monitor -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/2bgS42yD/image.jpg" alt="Arquimedes Maia" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Arquimedes Maia</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+            </div>
+
+            <!-- 17. Mariana Maia - Monitora -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/K4gHQJ4F/image.jpg" alt="Mariana Maia" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Mariana Maia</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitora</span>
+            </div>
+
+            <!-- 18. Yanne Paiva - Monitora -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/873yhvDj/image.jpg" alt="Yanne Paiva" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Yanne Paiva</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitora</span>
+            </div>
+
+            <!-- 19. Matheus Quevedo - Monitor -->
+            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+                <img src="https://i.postimg.cc/zbJt9dk8/image.jpg" alt="Matheus Quevedo" class="w-full h-full object-cover">
+              </div>
+              <h4 class="text-lg font-bold text-slate-100 text-center">Matheus Quevedo</h4>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+            </div>
+
+          </div>
+
+          <!-- Seta Direita -->
+          <button onclick="rolarCarrossel('dir')" class="absolute right-0 z-10 -mr-4 md:-mr-6 bg-[#0A2942] hover:bg-[#2D6A4F] text-white w-10 h-10 rounded-full border border-slate-500 shadow-lg flex items-center justify-center transition focus:outline-none">
+            &#10095;
+          </button>
+        </div>
+      </section>
+
+      <!-- Documentos Fixos (Edital/Certificado) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section class="bg-slate-800/80 rounded-2xl p-6 border border-slate-700 shadow-lg text-center flex flex-col justify-center items-center">
+          <h3 class="text-lg font-bold text-emerald-400 uppercase mb-2">Edital Oficial</h3>
+          <p class="text-slate-300 text-sm mb-4">Consulte as regras gerais e aprovações do curso no documento oficial.</p>
+          <a href="https://drive.google.com/drive/folders/1kh9OcUcIRFZkhAuHchQ71FwCbpEYWJrf" target="_blank" class="bg-[#2D6A4F] hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition">
+            Acessar Edital
+          </a>
+        </section>
+        <section class="bg-slate-800/80 rounded-2xl p-6 border border-slate-700 shadow-lg text-center flex flex-col justify-center items-center">
+          <h3 class="text-lg font-bold text-emerald-400 uppercase mb-2">Certificados</h3>
+          <p class="text-slate-300 text-sm mb-4">Acesse as emissões de certificados após a conclusão do curso.</p>
+          <a href="https://drive.google.com/drive/folders/1iQtDK8oafH3rJVm4_--vVbtrkY2AEAka" target="_blank" class="bg-[#2D6A4F] hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition">
+            Acessar Certificados
+          </a>
+        </section>
+      </div>
+    </div>
+
+    <!-- ABA: AVISOS E LOCAL -->
+    <div id="avisos" class="aba-conteudo fade-in hidden space-y-6">
+      
+      <!-- Informações de Local e Horário -->
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg flex flex-col md:flex-row gap-8 items-center">
+        <div class="flex-1 space-y-4">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-2xl">📍</span>
+            <h3 class="text-xl font-bold uppercase text-emerald-400">Local e Horário</h3>
+          </div>
+          <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+            <strong>Onde:</strong> Bloco de Medicina da UFERSA (Biomédicas I e Biomédicas II) - Mossoró/RN.
+          </p>
+          <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+            <strong>Horário das Práticas:</strong> 08h às 12h (Sábado e Domingo).
+          </p>
+          <a href="https://www.google.com/maps/search/Bloco+de+Medicina+UFERSA+Mossor%C3%B3/" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition mt-2 shadow-md">
+            Abrir no Google Maps
+          </a>
+        </div>
+        
+        <!-- FOTO DO PRÉDIO / UFERSA -->
+        <div class="w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg border-2 border-slate-600">
+           <img src="https://i.postimg.cc/94bzXVBP/image.jpg" alt="Bloco de Medicina UFERSA" class="w-full h-56 object-cover hover:scale-105 transition duration-500">
+        </div>
+      </section>
+
+      <!-- Avisos e Requisitos -->
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">⚠️</span>
+          <h3 class="text-xl font-bold uppercase text-amber-400">Avisos e Requisitos Obrigatórios</h3>
+        </div>
+        <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-4">
+          Cada participante deve assistir previamente a todas as videoaulas disponibilizadas no site antes das sessões práticas presenciais em bancada.
+        </p>
+        <div class="bg-amber-950/40 border border-amber-600/50 p-4 rounded-lg text-sm text-amber-200">
+          <strong>Importante:</strong> O cumprimento das atividades preparatórias é obrigatório para a liberação no laboratório.
+        </div>
+      </section>
+    </div>
+
+    <!-- ABA: 0. AMBIENTE CIRÚRGICO -->
+    <div id="centrocirurgico" class="aba-conteudo fade-in hidden space-y-6">
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Ambiente Cirúrgico</h3>
+        <p class="text-slate-300 leading-relaxed">
+          Estrutura, organização e funcionamento do centro cirúrgico. Conhecimento dos equipamentos, normas de circulação e segurança do paciente no ambiente perioperatório.
+        </p>
+      </section>
+      <!-- Sem a seção de vídeo -->
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="https://drive.google.com/drive/folders/1k5AeSY8r4WIfHMOaqDZXzJukdlK6AlHK" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+        </div>
+      </section>
+      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+        <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
+        <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
+        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+      </section>
+    </div>
+
+    <!-- ABA: 1. PARAMENTAÇÃO -->
+    <div id="paramentacao" class="aba-conteudo fade-in hidden space-y-6">
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Lavagem de Mãos e Paramentação</h3>
+        <p class="text-slate-300 leading-relaxed">
+          Protocolo rigoroso de higienização das mãos e antissepsia cirúrgica, paramentação com capote estéril e calçamento de luvas estéreis utilizando técnica fechada.
+        </p>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
+        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+          <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLY64oZwLMHNA" title="Playlist Paramentação" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="https://drive.google.com/drive/folders/1QmS1s8UwUmta2scKYR4Nz4wYY5P4Dr3r" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+        </div>
+      </section>
+      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+        <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
+        <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
+        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+      </section>
+    </div>
+
+    <!-- ABA: 2. INSTRUMENTAÇÃO -->
+    <div id="instrumentacao" class="aba-conteudo fade-in hidden space-y-6">
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Instrumentação Cirúrgica</h3>
+        <p class="text-slate-300 leading-relaxed">
+          Reconhecimento, manuseio e correta passagem dos instrumentais básicos: cabos de bisturi, tesouras, pinças hemostáticas e porta-agulhas.
+        </p>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
+        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+          <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLY6XSs6y42ow" title="Playlist Instrumentação" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="https://drive.google.com/drive/folders/1qqFJgVULnCcg6VDhzLmpgHxY3e_F4q_p" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+        </div>
+      </section>
+      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+        <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
+        <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
+        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+      </section>
+    </div>
+
+    <!-- ABA: 3. NÓS -->
+    <div id="nos" class="aba-conteudo fade-in hidden space-y-6">
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Nós Cirúrgicos</h3>
+        <p class="text-slate-300 leading-relaxed">
+          Treinamento intensivo para a execução segura e firme de nós cirúrgicos fundamentais com o uso das mãos e com o auxílio do porta-agulhas.
+        </p>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
+        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+          <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLDbwhHe_6478" title="Playlist Nós Cirúrgicos" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="https://drive.google.com/drive/folders/1BfJTv4ZEusimh6Ene_wVh4gYe-RmMUbP" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+        </div>
+      </section>
+      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+        <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
+        <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
+        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+      </section>
+    </div>
+
+    <!-- ABA: 4. ANESTESIA -->
+    <div id="anestesia" class="aba-conteudo fade-in hidden space-y-6">
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Princípios de Anestesia Local</h3>
+        <p class="text-slate-300 leading-relaxed">
+          Abordagem teórica e prática sobre os anestésicos locais mais comuns, doses máximas seguras, técnica de infiltração em campo e bloqueios simples.
+        </p>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
+        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+          <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLcSQ-PMdQOaM" title="Playlist Anestesia" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="https://drive.google.com/drive/folders/1HbzCpz7iCw93jBthMzGmHe4lBsIdL4lD" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+        </div>
+      </section>
+      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+        <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
+        <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
+        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+      </section>
+    </div>
+
+    <!-- ABA: 5. SUTURA -->
+    <div id="sutura" class="aba-conteudo fade-in hidden space-y-6">
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Técnicas de Sutura</h3>
+        <p class="text-slate-300 leading-relaxed">
+          Estudo e prática dos principais tipos de pontos cirúrgicos utilizados no fechamento de feridas e tecidos: simples, em "U", contínuo e intradérmico.
+        </p>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
+        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+          <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLXA3yq2puFX0" title="Playlist Suturas" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="https://drive.google.com/drive/folders/1HfbATyu7FZtTAm90USVSTP4kZvgEgPy1" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+        </div>
+      </section>
+      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+        <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
+        <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
+        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+      </section>
+    </div>
+
+    <!-- ABA: 6. INTUBAÇÃO -->
+    <div id="intubacao" class="aba-conteudo fade-in hidden space-y-6">
+      <!-- AVISO: EM BREVE -->
+      <section class="bg-gradient-to-r from-amber-600/20 to-amber-900/40 border border-amber-500/50 rounded-2xl p-6 shadow-lg text-center flex flex-col items-center justify-center">
+        <span class="text-4xl mb-2">🚧</span>
+        <h2 class="text-2xl font-extrabold text-amber-400 uppercase tracking-widest">Em Breve</h2>
+        <p class="text-slate-300 text-sm mt-2">O conteúdo desta aba estará disponível logo logo.</p>
+      </section>
+
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Intubação Orotraqueal</h3>
+        <p class="text-slate-300 leading-relaxed">
+          Diretrizes e demonstração da via aérea avançada, manuseio do laringoscópio, posicionamento adequado e técnica de introdução do tubo orotraqueal.
+        </p>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
+        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+          <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLX-G2QNSonNI" title="Playlist Intubação" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </section>
+      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+        <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="https://drive.google.com/drive/folders/1k5AeSY8r4WIfHMOaqDZXzJukdlK6AlHK" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+        </div>
+      </section>
+      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+        <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
+        <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
+        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Botão Flutuante: Voltar ao Topo -->
+  <button id="btn-topo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 right-6 bg-[#2D6A4F] hover:bg-emerald-600 text-white rounded-full p-3 shadow-xl transition-all duration-300 opacity-0 pointer-events-none z-50">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+  </button>
+
+  <!-- Rodapé com Redes Sociais e Créditos -->
+  <footer class="bg-[#0A2942] border-t border-slate-700 py-8 text-slate-400 mt-auto">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <!-- Contatos -->
+      <div class="flex flex-col gap-3 text-sm">
+        <a href="https://www.instagram.com/tecnicascirurgicas.ufersa?igsi=c21vejJ0NXQwdTB0" target="_blank" class="flex items-center gap-2 hover:text-emerald-400 transition">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 1.76-6.98 6.208-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.2 4.453 2.625 6.008 6.98 6.208 1.28.058 1.688.072 4.947.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-1.756 6.979-6.208.059-1.28.073-1.689.073-4.947 0-3.259-.014-3.667-.072-4.947-.196-4.453-2.624-6.008-6.979-6.208-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+          @tecnicascirurgicas.ufersa
+        </a>
+        <a href="mailto:cursocirurgiaufersa@gmail.com" class="flex items-center gap-2 hover:text-emerald-400 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          cursocirurgiaufersa@gmail.com
+        </a>
+      </div>
+
+      <!-- Direitos e Créditos -->
+      <div class="text-center md:text-right text-xs">
+        <p>© 2026 Semioliga e LATC (UFERSA) • Todos os direitos reservados</p>
+        <p class="mt-2 text-slate-500">Desenvolvido por Rafael Belo Cavalcante Linhares</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- SCRIPT PARA TROCAR AS ABAS, FUNCIONAR O CARROSSEL E O MENU SUSPENSO -->
+  <script>
+    // Função para abrir e fechar o menu suspenso
+    function toggleMenu() {
+      const menu = document.getElementById('menu-suspenso');
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        menu.classList.add('flex');
+      } else {
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+      }
+    }
+
+    // Função para alterar abas do menu
+    function mudarAba(idDaAba) {
+      // Oculta todas as abas
+      const abas = document.querySelectorAll('.aba-conteudo');
+      abas.forEach(aba => {
+        aba.classList.add('hidden');
+        aba.classList.remove('block');
+      });
+      // Mostra a aba clicada
+      const abaAtiva = document.getElementById(idDaAba);
+      abaAtiva.classList.remove('hidden');
+      abaAtiva.classList.add('block');
+      
+      // Destacar o botão ativo no Menu Desktop
+      document.querySelectorAll('.nav-btn-desktop').forEach(btn => {
+        btn.classList.remove('text-emerald-400', 'border-emerald-400');
+        btn.classList.add('text-white', 'border-transparent');
+      });
+      const btnAtivoDesktop = document.getElementById('nav-desktop-' + idDaAba);
+      if(btnAtivoDesktop) {
+        btnAtivoDesktop.classList.remove('text-white', 'border-transparent');
+        btnAtivoDesktop.classList.add('text-emerald-400', 'border-emerald-400');
+      }
+
+      // Destacar o botão ativo no Menu Mobile
+      document.querySelectorAll('.nav-btn-mobile').forEach(btn => {
+        btn.classList.remove('text-emerald-400', 'bg-slate-700');
+      });
+      const btnAtivoMobile = document.getElementById('nav-mobile-' + idDaAba);
+      if(btnAtivoMobile) {
+        btnAtivoMobile.classList.add('text-emerald-400', 'bg-slate-700');
+      }
+      
+      // Fechar o menu suspenso automaticamente após clicar em uma aba (mobile)
+      const menu = document.getElementById('menu-suspenso');
+      if (!menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+        menu.classList.remove('flex');
+      }
+    }
+
+    // Controle de exibição do Botão "Voltar ao Topo"
+    window.addEventListener('scroll', () => {
+      const btnTopo = document.getElementById('btn-topo');
+      if (window.scrollY > 300) {
+        btnTopo.classList.remove('opacity-0', 'pointer-events-none');
+        btnTopo.classList.add('opacity-100', 'pointer-events-auto');
+      } else {
+        btnTopo.classList.add('opacity-0', 'pointer-events-none');
+        btnTopo.classList.remove('opacity-100', 'pointer-events-auto');
+      }
+    });
+
+    // Função para controlar a rolagem manual do carrossel de monitores
+    function rolarCarrossel(direcao) {
+      const track = document.getElementById('carrossel-equipe');
+      const scrollAmount = track.offsetWidth; 
+      
+      if (direcao === 'esq') {
+        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+
+    // Auto-scroll do carrossel (a cada 3,5 segundos)
+    setInterval(() => {
+      const track = document.getElementById('carrossel-equipe');
+      const abaInicio = document.getElementById('inicio');
+      
+      // Só rola se a aba Início estiver visível
+      if (abaInicio && !abaInicio.classList.contains('hidden')) {
+        // Se chegou no final, volta para o início
+        if (track.scrollLeft + track.offsetWidth >= track.scrollWidth - 10) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          track.scrollBy({ left: track.offsetWidth, behavior: 'smooth' });
+        }
+      }
+    }, 3500);
+  </script>
+
+</body>
+</html>
