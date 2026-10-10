@@ -1,38 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>I Curso de Técnicas Cirúrgicas - UFERSA</title>
   
-  <!-- FAVICON (Ícone da Aba do Navegador) -->
+  <!-- FAVICON -->
   <link rel="icon" href="https://i.postimg.cc/jLSzxsqv/logo.jpg" type="image/jpeg">
   
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Montserrat', sans-serif; background-color: #0f172a; }
-    /* Animação suave ao trocar de aba */
-    .fade-in { animation: fadeIn 0.3s ease-in-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     
-    /* Ocultar barra de rolagem do carrossel mas manter a funcionalidade */
+    /* Animação suave customizada */
+    .fade-in { 
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+    }
+    @keyframes fadeIn { 
+      from { opacity: 0; transform: translateY(8px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+    
+    /* Ocultar barra de rolagem mantendo funcionalidade */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="min-h-screen text-slate-100 flex flex-col relative">
+<body class="min-h-screen text-slate-100 flex flex-col relative selection:bg-emerald-500 selection:text-white">
 
-  <!-- Header / Menu de Navegação COM EFEITO VIDRO FOSCO (backdrop-blur-md) -->
-  <header class="bg-[#0A2942]/90 backdrop-blur-md border-b border-slate-700 sticky top-0 z-50 shadow-md">
+  <!-- Header / Menu de Navegação -->
+  <header class="bg-[#0A2942]/90 backdrop-blur-md border-b border-slate-700/80 sticky top-0 z-50 shadow-lg">
     <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center relative">
-      <div class="flex items-center gap-2">
-        <span class="bg-[#2D6A4F] text-white font-bold text-xs uppercase px-2.5 py-1 rounded">UFERSA</span>
+      <div class="flex items-center gap-2.5 cursor-pointer" onclick="mudarAba('inicio')">
+        <span class="bg-[#2D6A4F] text-white font-bold text-xs uppercase px-2.5 py-1 rounded shadow-sm">UFERSA</span>
         <h1 class="font-bold text-sm md:text-base tracking-wide uppercase">Técnicas Cirúrgicas</h1>
       </div>
       
       <!-- Botão Menu Hambúrguer (Mobile) -->
-      <button onclick="toggleMenu()" class="text-white hover:text-emerald-400 transition focus:outline-none flex items-center gap-2 lg:hidden">
+      <button id="btn-hamburguer" onclick="toggleMenu()" class="text-white hover:text-emerald-400 transition-colors focus:outline-none flex items-center gap-2 lg:hidden p-1">
         <span class="font-semibold text-sm hidden sm:block">Menu</span>
         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -40,29 +46,29 @@
       </button>
 
       <!-- Menu Principal (Desktop) -->
-      <nav class="hidden lg:flex gap-4 text-sm font-semibold">
-        <button id="nav-desktop-inicio" onclick="mudarAba('inicio')" class="nav-btn-desktop px-2 py-1 text-emerald-400 border-b-2 border-emerald-400 transition">Início</button>
-        <button id="nav-desktop-avisos" onclick="mudarAba('avisos')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Avisos e Local</button>
-        <button id="nav-desktop-centrocirurgico" onclick="mudarAba('centrocirurgico')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Ambiente Cirúrgico</button>
-        <button id="nav-desktop-paramentacao" onclick="mudarAba('paramentacao')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Paramentação</button>
-        <button id="nav-desktop-instrumentacao" onclick="mudarAba('instrumentacao')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Instrumentação</button>
-        <button id="nav-desktop-nos" onclick="mudarAba('nos')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Nós</button>
-        <button id="nav-desktop-anestesia" onclick="mudarAba('anestesia')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Anestesia</button>
-        <button id="nav-desktop-sutura" onclick="mudarAba('sutura')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Sutura</button>
-        <button id="nav-desktop-intubacao" onclick="mudarAba('intubacao')" class="nav-btn-desktop px-2 py-1 text-white border-b-2 border-transparent hover:text-emerald-400 transition">Intubação</button>
+      <nav class="hidden lg:flex gap-1 xl:gap-3 text-sm font-semibold">
+        <button id="nav-desktop-inicio" onclick="mudarAba('inicio')" class="nav-btn-desktop px-3 py-1.5 rounded-lg text-emerald-400 bg-slate-800/60 border border-emerald-500/30 transition-all duration-200">Início</button>
+        <button id="nav-desktop-avisos" onclick="mudarAba('avisos')" class="nav-btn-desktop px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-400 hover:bg-slate-800/40 border border-transparent transition-all duration-200">Avisos e Local</button>
+        <button id="nav-desktop-centrocirurgico" onclick="mudarAba('centrocirurgico')" class="nav-btn-desktop px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-400 hover:bg-slate-800/40 border border-transparent transition-all duration-200">Ambiente Cirúrgico</button>
+        <button id="nav-desktop-paramentacao" onclick="mudarAba('paramentacao')" class="nav-btn-desktop px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-400 hover:bg-slate-800/40 border border-transparent transition-all duration-200">Paramentação</button>
+        <button id="nav-desktop-instrumentacao" onclick="mudarAba('instrumentacao')" class="nav-btn-desktop px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-400 hover:bg-slate-800/40 border border-transparent transition-all duration-200">Instrumentação</button>
+        <button id="nav-desktop-nos" onclick="mudarAba('nos')" class="nav-btn-desktop px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-400 hover:bg-slate-800/40 border border-transparent transition-all duration-200">Nós</button>
+        <button id="nav-desktop-anestesia" onclick="mudarAba('anestesia')" class="nav-btn-desktop px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-400 hover:bg-slate-800/40 border border-transparent transition-all duration-200">Anestesia</button>
+        <button id="nav-desktop-sutura" onclick="mudarAba('sutura')" class="nav-btn-desktop px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-400 hover:bg-slate-800/40 border border-transparent transition-all duration-200">Sutura</button>
+        <button id="nav-desktop-intubacao" onclick="mudarAba('intubacao')" class="nav-btn-desktop px-3 py-1.5 rounded-lg text-slate-300 hover:text-emerald-400 hover:bg-slate-800/40 border border-transparent transition-all duration-200">Intubação</button>
       </nav>
 
       <!-- Menu Suspenso (Dropdown Mobile) -->
-      <nav id="menu-suspenso" class="hidden absolute right-4 top-16 bg-[#0A2942]/95 backdrop-blur-xl border border-slate-600 rounded-lg shadow-2xl flex-col w-56 overflow-hidden z-50 lg:hidden">
-        <button id="nav-mobile-inicio" onclick="mudarAba('inicio')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold bg-slate-700 text-emerald-400 transition border-b border-slate-700">Início</button>
-        <button id="nav-mobile-avisos" onclick="mudarAba('avisos')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Avisos e Local</button>
-        <button id="nav-mobile-centrocirurgico" onclick="mudarAba('centrocirurgico')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Ambiente Cirúrgico</button>
-        <button id="nav-mobile-paramentacao" onclick="mudarAba('paramentacao')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Paramentação</button>
-        <button id="nav-mobile-instrumentacao" onclick="mudarAba('instrumentacao')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Instrumentação</button>
-        <button id="nav-mobile-nos" onclick="mudarAba('nos')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Nós</button>
-        <button id="nav-mobile-anestesia" onclick="mudarAba('anestesia')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Anestesia</button>
-        <button id="nav-mobile-sutura" onclick="mudarAba('sutura')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition border-b border-slate-700">Sutura</button>
-        <button id="nav-mobile-intubacao" onclick="mudarAba('intubacao')" class="nav-btn-mobile w-full text-left px-6 py-3 text-sm font-semibold hover:bg-slate-700 hover:text-emerald-400 transition">Intubação</button>
+      <nav id="menu-suspenso" class="hidden absolute right-4 top-16 bg-[#0A2942]/95 backdrop-blur-2xl border border-slate-700 rounded-xl shadow-2xl flex-col w-60 overflow-hidden z-50 lg:hidden divide-y divide-slate-700/60">
+        <button id="nav-mobile-inicio" onclick="mudarAba('inicio')" class="nav-btn-mobile w-full text-left px-5 py-3 text-sm font-semibold bg-slate-800/80 text-emerald-400 transition-colors">Início</button>
+        <button id="nav-mobile-avisos" onclick="mudarAba('avisos')" class="nav-btn-mobile w-full text-left px-5 py-3 text-sm font-semibold hover:bg-slate-800/50 hover:text-emerald-400 transition-colors">Avisos e Local</button>
+        <button id="nav-mobile-centrocirurgico" onclick="mudarAba('centrocirurgico')" class="nav-btn-mobile w-full text-left px-5 py-3 text-sm font-semibold hover:bg-slate-800/50 hover:text-emerald-400 transition-colors">Ambiente Cirúrgico</button>
+        <button id="nav-mobile-paramentacao" onclick="mudarAba('paramentacao')" class="nav-btn-mobile w-full text-left px-5 py-3 text-sm font-semibold hover:bg-slate-800/50 hover:text-emerald-400 transition-colors">Paramentação</button>
+        <button id="nav-mobile-instrumentacao" onclick="mudarAba('instrumentacao')" class="nav-btn-mobile w-full text-left px-5 py-3 text-sm font-semibold hover:bg-slate-800/50 hover:text-emerald-400 transition-colors">Instrumentação</button>
+        <button id="nav-mobile-nos" onclick="mudarAba('nos')" class="nav-btn-mobile w-full text-left px-5 py-3 text-sm font-semibold hover:bg-slate-800/50 hover:text-emerald-400 transition-colors">Nós</button>
+        <button id="nav-mobile-anestesia" onclick="mudarAba('anestesia')" class="nav-btn-mobile w-full text-left px-5 py-3 text-sm font-semibold hover:bg-slate-800/50 hover:text-emerald-400 transition-colors">Anestesia</button>
+        <button id="nav-mobile-sutura" onclick="mudarAba('sutura')" class="nav-btn-mobile w-full text-left px-5 py-3 text-sm font-semibold hover:bg-slate-800/50 hover:text-emerald-400 transition-colors">Sutura</button>
+        <button id="nav-mobile-intubacao" onclick="mudarAba('intubacao')" class="nav-btn-mobile w-full text-left px-5 py-3 text-sm font-semibold hover:bg-slate-800/50 hover:text-emerald-400 transition-colors">Intubação</button>
       </nav>
     </div>
   </header>
@@ -74,275 +80,323 @@
     <div id="inicio" class="aba-conteudo fade-in space-y-8 block">
       
       <!-- Card Principal -->
-      <section class="bg-[#0A2942] rounded-2xl shadow-xl p-8 md:p-12 border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-8">
-        <div class="space-y-4 max-w-xl">
-          <span class="bg-[#2D6A4F] text-white text-xs font-bold uppercase px-3 py-1 rounded-full">
+      <section class="bg-gradient-to-br from-[#0A2942] to-[#071f33] rounded-2xl shadow-xl p-8 md:p-12 border border-slate-700/80 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+        <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="space-y-4 max-w-xl z-10">
+          <span class="bg-[#2D6A4F] text-white text-xs font-bold uppercase px-3.5 py-1.5 rounded-full shadow-sm inline-block">
             Curso Teórico-Prático • 40 Horas
           </span>
-          <h2 class="text-2xl md:text-4xl font-extrabold uppercase leading-tight">
+          <h2 class="text-2xl md:text-4xl font-extrabold uppercase leading-tight tracking-wide">
             I Curso de Iniciação de Técnicas Cirúrgicas
           </h2>
-          <p class="text-slate-300 text-sm md:text-base">
-            Promovido pela Semioliga e LATC da UFERSA. Fundamentos essenciais para a formação médica inicial.
+          <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+            Promovido pela Semioliga e LATC da UFERSA. Fundamentos essenciais para a formação médica inicial com excelência prática.
           </p>
         </div>
         <!-- Logo do Curso -->
-        <img src="https://i.postimg.cc/jLSzxsqv/logo.jpg" alt="Logo do Curso" class="w-40 h-40 rounded-full border-4 border-slate-600 object-cover bg-white shadow-xl">
+        <div class="relative group z-10 flex-shrink-0">
+          <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full blur opacity-30 group-hover:opacity-75 transition duration-500"></div>
+          <img src="https://i.postimg.cc/jLSzxsqv/logo.jpg" alt="Logo do Curso" class="relative w-40 h-40 rounded-full border-4 border-slate-700 object-cover bg-white shadow-xl">
+        </div>
       </section>
 
       <!-- BLOCO BEM-VINDOS -->
-      <section class="bg-gradient-to-r from-[#0A2942] to-[#2D6A4F] rounded-2xl shadow-xl p-10 md:p-16 border border-slate-600 text-center flex flex-col items-center justify-center">
+      <section class="bg-gradient-to-r from-[#0A2942] via-[#113a5c] to-[#2D6A4F] rounded-2xl shadow-xl p-10 md:p-16 border border-slate-600/60 text-center flex flex-col items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none"></div>
         <h2 class="text-4xl md:text-6xl font-extrabold text-white uppercase tracking-widest drop-shadow-md">
           Bem-vindos
         </h2>
-        <div class="w-24 h-1 bg-emerald-400 rounded-full mt-6 mb-6"></div>
-        <p class="text-slate-200 text-base md:text-lg max-w-2xl font-medium">
-          Estamos muito felizes em ter você conosco! Aproveite todo o conteúdo teórico e prático preparado com excelência para o seu aprendizado.
+        <div class="w-24 h-1 bg-emerald-400 rounded-full mt-6 mb-6 shadow-glow"></div>
+        <p class="text-slate-200 text-base md:text-lg max-w-2xl font-medium leading-relaxed">
+          Estamos muito felizes em ter você conosco! Aproveite todo o conteúdo teórico e prático preparado com dedicação para o seu aprendizado cirúrgico.
         </p>
       </section>
 
+      <!-- BLOCO DIVISÃO DE GRUPOS -->
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-10 border border-slate-700/80 shadow-xl">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">📌</span>
+          <h3 class="text-xl md:text-2xl font-bold text-emerald-400 uppercase tracking-wide">1. Divisão dos Grupos</h3>
+        </div>
+        <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
+          Os participantes serão divididos em dois grupos, A e B. Para isso, disponibilizaremos uma enquete aqui no grupo. Pedimos que todos respondam à enquete para facilitar a organização.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-slate-900/70 p-5 rounded-xl border-l-4 border-emerald-500 shadow-sm">
+            <h4 class="font-bold text-emerald-400 text-lg mb-1 flex items-center gap-2">
+              <span class="bg-emerald-950/50 p-1 rounded">🔹</span> Grupo A
+            </h4>
+            <p class="text-sm text-slate-300">Sábado pela manhã e domingo à tarde.</p>
+          </div>
+          <div class="bg-slate-900/70 p-5 rounded-xl border-l-4 border-teal-500 shadow-sm">
+            <h4 class="font-bold text-teal-400 text-lg mb-1 flex items-center gap-2">
+              <span class="bg-teal-950/50 p-1 rounded">🔹</span> Grupo B
+            </h4>
+            <p class="text-sm text-slate-300">Sábado à tarde e domingo pela manhã.</p>
+          </div>
+        </div>
+      </section>
+
       <!-- BLOCO CRONOGRAMA PRÁTICO -->
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-10 border border-slate-700 shadow-lg">
-        <h3 class="text-2xl md:text-3xl font-bold text-emerald-400 uppercase mb-8 text-center tracking-wide">Cronograma Prático</h3>
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-10 border border-slate-700/80 shadow-xl">
+        <div class="flex items-center gap-3 mb-8 justify-center">
+          <span class="text-2xl hidden md:inline">📌</span>
+          <h3 class="text-2xl md:text-3xl font-bold text-emerald-400 uppercase text-center tracking-wide">2. Horários das Atividades</h3>
+        </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           
           <!-- Sábado -->
-          <div class="bg-slate-900/60 rounded-xl p-6 border-l-4 border-emerald-500 shadow-md hover:bg-slate-900 transition duration-300">
-            <div class="flex items-center gap-4 mb-5">
-              <div class="bg-[#0A2942] p-3 rounded-lg text-emerald-400 border border-slate-600">
+          <div class="bg-slate-900/70 rounded-xl p-6 border-l-4 border-emerald-500 shadow-md hover:bg-slate-900 transition-all duration-300 hover:-translate-y-1">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="bg-[#0A2942] p-3 rounded-xl text-emerald-400 border border-slate-700 shadow-inner">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
               </div>
               <div>
                 <h4 class="text-xl font-bold text-slate-100 uppercase">Sábado</h4>
-                <p class="text-sm text-emerald-400 font-semibold tracking-wider">17/10/2026 • 08h às 12h</p>
+                <p class="text-sm text-emerald-400 font-semibold tracking-wider">17/10/2026</p>
               </div>
             </div>
-            <ul class="space-y-3 text-slate-300 text-sm md:text-base">
-              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Lavagem de mãos</li>
-              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Paramentação</li>
-              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Instrumentação</li>
-              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Ponto simples</li>
-              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Ponto em X</li>
+            
+            <div class="bg-slate-800/50 p-4 rounded-lg mb-5 border border-slate-700/50">
+              <p class="text-sm text-slate-200 mb-1"><strong class="text-emerald-400">Grupo A:</strong> 8h às 11h</p>
+              <p class="text-sm text-slate-200"><strong class="text-teal-400">Grupo B:</strong> 14h às 17h</p>
+            </div>
+            
+            <h5 class="text-sm font-bold text-slate-400 uppercase mb-3 border-b border-slate-700 pb-2">Estações</h5>
+            <ul class="space-y-2.5 text-slate-300 text-sm">
+              <li class="flex items-center gap-2.5"><span class="text-emerald-400 font-bold bg-emerald-950/50 p-1 rounded-full text-[10px]">✓</span> Lavagem de mãos</li>
+              <li class="flex items-center gap-2.5"><span class="text-emerald-400 font-bold bg-emerald-950/50 p-1 rounded-full text-[10px]">✓</span> Paramentação</li>
+              <li class="flex items-center gap-2.5"><span class="text-emerald-400 font-bold bg-emerald-950/50 p-1 rounded-full text-[10px]">✓</span> Instrumentação</li>
+              <li class="flex items-center gap-2.5"><span class="text-emerald-400 font-bold bg-emerald-950/50 p-1 rounded-full text-[10px]">✓</span> Anestesia</li>
+              <li class="flex items-center gap-2.5"><span class="text-emerald-400 font-bold bg-emerald-950/50 p-1 rounded-full text-[10px]">✓</span> Ponto simples</li>
+              <li class="flex items-center gap-2.5"><span class="text-emerald-400 font-bold bg-emerald-950/50 p-1 rounded-full text-[10px]">✓</span> Chuleio simples</li>
             </ul>
           </div>
 
           <!-- Domingo -->
-          <div class="bg-slate-900/60 rounded-xl p-6 border-l-4 border-emerald-500 shadow-md hover:bg-slate-900 transition duration-300">
-            <div class="flex items-center gap-4 mb-5">
-              <div class="bg-[#0A2942] p-3 rounded-lg text-emerald-400 border border-slate-600">
+          <div class="bg-slate-900/70 rounded-xl p-6 border-l-4 border-emerald-500 shadow-md hover:bg-slate-900 transition-all duration-300 hover:-translate-y-1">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="bg-[#0A2942] p-3 rounded-xl text-emerald-400 border border-slate-700 shadow-inner">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
               </div>
               <div>
                 <h4 class="text-xl font-bold text-slate-100 uppercase">Domingo</h4>
-                <p class="text-sm text-emerald-400 font-semibold tracking-wider">18/10/2026 • 08h às 12h</p>
+                <p class="text-sm text-emerald-400 font-semibold tracking-wider">18/10/2026</p>
               </div>
             </div>
-            <ul class="space-y-3 text-slate-300 text-sm md:text-base">
-              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Ponto chuleio simples</li>
-              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Chuleio ancorado</li>
-              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Ponto em X</li>
-              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> Donatti</li>
-              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> 2 Estações de Nós cirúrgicos</li>
-              <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">✓</span> 1 Estação de anestesia</li>
+            
+            <div class="bg-slate-800/50 p-4 rounded-lg mb-5 border border-slate-700/50">
+              <p class="text-sm text-slate-200 mb-1"><strong class="text-teal-400">Grupo B:</strong> 8h30 às 11h</p>
+              <p class="text-sm text-slate-200"><strong class="text-emerald-400">Grupo A:</strong> 14h às 16h30</p>
+            </div>
+            
+            <h5 class="text-sm font-bold text-slate-400 uppercase mb-3 border-b border-slate-700 pb-2">Estações</h5>
+            <ul class="space-y-2.5 text-slate-300 text-sm">
+              <li class="flex items-center gap-2.5"><span class="text-emerald-400 font-bold bg-emerald-950/50 p-1 rounded-full text-[10px]">✓</span> Chuleio ancorado</li>
+              <li class="flex items-center gap-2.5"><span class="text-emerald-400 font-bold bg-emerald-950/50 p-1 rounded-full text-[10px]">✓</span> Ponto em X</li>
+              <li class="flex items-center gap-2.5"><span class="text-emerald-400 font-bold bg-emerald-950/50 p-1 rounded-full text-[10px]">✓</span> Ponto Donati</li>
+              <li class="flex items-center gap-2.5"><span class="text-emerald-400 font-bold bg-emerald-950/50 p-1 rounded-full text-[10px]">✓</span> Nós</li>
+              <li class="flex items-center gap-2.5"><span class="text-emerald-400 font-bold bg-emerald-950/50 p-1 rounded-full text-[10px]">✓</span> Intubação Orotraqueal</li>
             </ul>
           </div>
 
         </div>
       </section>
 
-      <!-- Seção: Equipe (CARROSSEL SÓ FOTOS COM NOMES E CARGOS ORDENADOS) -->
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg relative">
-        <h3 class="text-xl font-bold text-emerald-400 uppercase mb-6 text-center">Nossa Equipe de Monitores</h3>
+      <!-- Seção: Equipe (CARROSSEL) -->
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl relative">
+        <h3 class="text-xl font-bold text-emerald-400 uppercase mb-6 text-center tracking-wide">Nossa Equipe de Monitores</h3>
         
-        <div class="relative flex items-center">
+        <div class="relative flex items-center group">
           <!-- Seta Esquerda -->
-          <button onclick="rolarCarrossel('esq')" class="absolute left-0 z-10 -ml-4 md:-ml-6 bg-[#0A2942] hover:bg-[#2D6A4F] text-white w-10 h-10 rounded-full border border-slate-500 shadow-lg flex items-center justify-center transition focus:outline-none">
+          <button onclick="rolarCarrossel('esq')" class="absolute left-0 z-20 -ml-3 md:-ml-5 bg-[#0A2942]/90 hover:bg-[#2D6A4F] text-white w-10 h-10 rounded-full border border-slate-600 shadow-xl flex items-center justify-center transition-all duration-200 focus:outline-none hover:scale-110 active:scale-95">
             &#10094;
           </button>
 
           <!-- Track do Carrossel -->
-          <div id="carrossel-equipe" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth w-full px-2 py-2">
+          <div id="carrossel-equipe" class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth w-full px-2 py-3">
             
-            <!-- 01. Rafael Belo - Presidente -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- Cards de Equipe (Mantidos todos os 19 membros originais) -->
+            <!-- 01. Rafael Belo -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/WtWd70jZ/image.jpg" alt="Rafael Belo" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Rafael Belo</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Presidente</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Presidente</span>
             </div>
 
-            <!-- 02. Luis Felipe - Vice-Presidente -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 02. Luis Felipe -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/QFpDPjtX/image.jpg" alt="Luis Felipe" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Luis Felipe</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Vice-Presidente</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Vice-Presidente</span>
             </div>
 
-            <!-- 03. Evelin Saad - Financeiro -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 03. Evelin Saad -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/p9q9nfKy/image.jpg" alt="Evelin Saad" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Evelin Saad</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Financeiro</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Financeiro</span>
             </div>
 
-            <!-- 04. Glória Maria - Financeiro -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 04. Glória Maria -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/XGPh9G8X/image.jpg" alt="Glória Maria" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Glória Maria</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Financeiro</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Financeiro</span>
             </div>
 
-            <!-- 05. Ana Clara - Financeiro -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 05. Ana Clara -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/ygjTx38j/image.jpg" alt="Ana Clara" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Ana Clara</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Financeiro</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Financeiro</span>
             </div>
 
-            <!-- 06. Francisco Laercio - Secretaria -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 06. Francisco Laercio -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/1nY16tW5/image.jpg" alt="Francisco Laercio" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Francisco Laercio</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Secretaria</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Secretaria</span>
             </div>
 
-            <!-- 07. Luana Oliveira - Secretaria -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 07. Luana Oliveira -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/KkD0TsJz/image.jpg" alt="Luana Oliveira" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Luana Oliveira</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Secretaria</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Secretaria</span>
             </div>
 
-            <!-- 08. José Bismark - Marketing -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 08. José Bismark -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/fJZ0Fr24/image.jpg" alt="José Bismark" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">José Bismark</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Marketing</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Marketing</span>
             </div>
 
-            <!-- 09. Thais Andrade - Monitora -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 09. Thais Andrade -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/kRNRGQ5h/image.jpg" alt="Thais Andrade" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Thais Andrade</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitora</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Monitora</span>
             </div>
 
-            <!-- 10. Vanessa Louyse - Monitora -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 10. Vanessa Louyse -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/0b1qsfn9/image.jpg" alt="Vanessa Louyse" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Vanessa Louyse</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitora</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Monitora</span>
             </div>
 
-            <!-- 11. Emanuel Alves - Monitor -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 11. Emanuel Alves -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/rzT6sLKF/image.jpg" alt="Emanuel Alves" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Emanuel Alves</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Monitor</span>
             </div>
 
-            <!-- 12. Ricardo Queiroz - Monitor -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 12. Ricardo Queiroz -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/rdz4jRfY/image.jpg" alt="Ricardo Queiroz" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Ricardo Queiroz</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Monitor</span>
             </div>
 
-            <!-- 13. Thiago Novais - Monitor -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 13. Thiago Novais -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/mczxQRHt/image.jpg" alt="Thiago Novais" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Thiago Novais</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Monitor</span>
             </div>
 
-            <!-- 14. Bárbara Fernanda - Monitora -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 14. Bárbara Fernanda -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/5HwgcRcv/image.jpg" alt="Bárbara Fernanda" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Bárbara Fernanda</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitora</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Monitora</span>
             </div>
 
-            <!-- 15. Yago Armando - Monitor -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 15. Yago Armando -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/k6gbj17G/image.jpg" alt="Yago Armando" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Yago Armando</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Monitor</span>
             </div>
 
-            <!-- 16. Arquimedes Maia - Monitor -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 16. Arquimedes Maia -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/2bgS42yD/image.jpg" alt="Arquimedes Maia" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Arquimedes Maia</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Monitor</span>
             </div>
 
-            <!-- 17. Mariana Maia - Monitora -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 17. Mariana Maia -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/K4gHQJ4F/image.jpg" alt="Mariana Maia" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Mariana Maia</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitora</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Monitora</span>
             </div>
 
-            <!-- 18. Yanne Paiva - Monitora -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 18. Yanne Paiva -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/873yhvDj/image.jpg" alt="Yanne Paiva" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Yanne Paiva</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitora</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Monitora</span>
             </div>
 
-            <!-- 19. Matheus Quevedo - Monitor -->
-            <div class="flex flex-col items-center justify-center bg-slate-700/50 p-6 rounded-xl border border-slate-600 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-700 transition group">
-              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover:scale-105 transition duration-300">
+            <!-- 19. Matheus Quevedo -->
+            <div class="flex flex-col items-center justify-center bg-slate-900/50 p-6 rounded-xl border border-slate-700/70 flex-shrink-0 w-full sm:min-w-[calc(50%-0.5rem)] lg:min-w-[calc(33.333%-0.67rem)] snap-start hover:bg-slate-900/80 transition-all duration-300 hover:border-emerald-500/50 group/card">
+              <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-[#2D6A4F] shadow-md mb-4 group-hover/card:scale-105 transition duration-300">
                 <img src="https://i.postimg.cc/zbJt9dk8/image.jpg" alt="Matheus Quevedo" class="w-full h-full object-cover">
               </div>
               <h4 class="text-lg font-bold text-slate-100 text-center">Matheus Quevedo</h4>
-              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center">Monitor</span>
+              <span class="text-[10px] font-bold bg-[#2D6A4F] text-white px-3 py-1 rounded-full uppercase tracking-wider mt-2 text-center shadow-sm">Monitor</span>
             </div>
 
           </div>
 
           <!-- Seta Direita -->
-          <button onclick="rolarCarrossel('dir')" class="absolute right-0 z-10 -mr-4 md:-mr-6 bg-[#0A2942] hover:bg-[#2D6A4F] text-white w-10 h-10 rounded-full border border-slate-500 shadow-lg flex items-center justify-center transition focus:outline-none">
+          <button onclick="rolarCarrossel('dir')" class="absolute right-0 z-20 -mr-3 md:-mr-5 bg-[#0A2942]/90 hover:bg-[#2D6A4F] text-white w-10 h-10 rounded-full border border-slate-600 shadow-xl flex items-center justify-center transition-all duration-200 focus:outline-none hover:scale-110 active:scale-95">
             &#10095;
           </button>
         </div>
@@ -350,17 +404,17 @@
 
       <!-- Documentos Fixos (Edital/Certificado) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <section class="bg-slate-800/80 rounded-2xl p-6 border border-slate-700 shadow-lg text-center flex flex-col justify-center items-center">
+        <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/80 shadow-xl text-center flex flex-col justify-center items-center hover:border-emerald-500/40 transition-all duration-300">
           <h3 class="text-lg font-bold text-emerald-400 uppercase mb-2">Edital Oficial</h3>
           <p class="text-slate-300 text-sm mb-4">Consulte as regras gerais e aprovações do curso no documento oficial.</p>
-          <a href="https://drive.google.com/drive/folders/1kh9OcUcIRFZkhAuHchQ71FwCbpEYWJrf" target="_blank" class="bg-[#2D6A4F] hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition">
+          <a href="https://drive.google.com/drive/folders/1kh9OcUcIRFZkhAuHchQ71FwCbpEYWJrf" target="_blank" class="bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-2.5 px-6 rounded-xl text-sm transition-all shadow-md hover:shadow-emerald-900/50 hover:scale-105 active:scale-95">
             Acessar Edital
           </a>
         </section>
-        <section class="bg-slate-800/80 rounded-2xl p-6 border border-slate-700 shadow-lg text-center flex flex-col justify-center items-center">
+        <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/80 shadow-xl text-center flex flex-col justify-center items-center hover:border-emerald-500/40 transition-all duration-300">
           <h3 class="text-lg font-bold text-emerald-400 uppercase mb-2">Certificados</h3>
           <p class="text-slate-300 text-sm mb-4">Acesse as emissões de certificados após a conclusão do curso.</p>
-          <a href="https://drive.google.com/drive/folders/1iQtDK8oafH3rJVm4_--vVbtrkY2AEAka" target="_blank" class="bg-[#2D6A4F] hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition">
+          <a href="https://drive.google.com/drive/folders/1iQtDK8oafH3rJVm4_--vVbtrkY2AEAka" target="_blank" class="bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-2.5 px-6 rounded-xl text-sm transition-all shadow-md hover:shadow-emerald-900/50 hover:scale-105 active:scale-95">
             Acessar Certificados
           </a>
         </section>
@@ -370,32 +424,76 @@
     <!-- ABA: AVISOS E LOCAL -->
     <div id="avisos" class="aba-conteudo fade-in hidden space-y-6">
       
-      <!-- Informações de Local e Horário -->
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg flex flex-col md:flex-row gap-8 items-center">
+      <!-- Pontualidade -->
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">⏰</span>
+          <h3 class="text-xl font-bold uppercase text-amber-400">Atenção à Pontualidade!</h3>
+        </div>
+        <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
+          Todos devem chegar com, no mínimo, <strong>30 minutos de antecedência</strong>, para receber as orientações iniciais e permitir a organização dos participantes e das atividades.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-slate-900/60 p-5 rounded-xl border border-slate-700">
+            <h4 class="font-bold text-emerald-400 mb-3 border-b border-slate-700 pb-2">Horários de Chegada - Sábado</h4>
+            <ul class="text-sm text-slate-300 space-y-2">
+              <li><strong class="text-slate-100">Pela Manhã:</strong> 7h30</li>
+              <li><strong class="text-slate-100">À Tarde:</strong> 13h30</li>
+            </ul>
+          </div>
+          <div class="bg-slate-900/60 p-5 rounded-xl border border-slate-700">
+            <h4 class="font-bold text-emerald-400 mb-3 border-b border-slate-700 pb-2">Horários de Chegada - Domingo</h4>
+            <ul class="text-sm text-slate-300 space-y-2">
+              <li><strong class="text-slate-100">Pela Manhã:</strong> 8h00</li>
+              <li><strong class="text-slate-100">À Tarde:</strong> 13h30</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vestimenta Recomendada -->
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">🥼</span>
+          <h3 class="text-xl font-bold uppercase text-emerald-400">Vestimenta Recomendada</h3>
+        </div>
+        <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+          Quem quiser poderá ir de <strong>scrub ou jaleco</strong>. Recomendamos fortemente que o façam para ambientação e identificação, porém <strong>não é obrigatório</strong>.
+        </p>
+      </section>
+
+      <!-- Materiais Individuais -->
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">📌</span>
+          <h3 class="text-xl font-bold uppercase text-emerald-400">5. Materiais Individuais</h3>
+        </div>
+        <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+          Quem possuir kit de sutura e/ou pele sintética para treinamento e quiser, poderá levá-los para aproveitar melhor as atividades práticas. A utilização desses materiais seguirá as orientações dos monitores responsáveis por cada estação.
+        </p>
+      </section>
+
+      <!-- Local e Mapa -->
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl flex flex-col md:flex-row gap-8 items-center">
         <div class="flex-1 space-y-4">
-          <div class="flex items-center gap-3 mb-4">
+          <div class="flex items-center gap-3 mb-2">
             <span class="text-2xl">📍</span>
-            <h3 class="text-xl font-bold uppercase text-emerald-400">Local e Horário</h3>
+            <h3 class="text-xl font-bold uppercase text-emerald-400">Local</h3>
           </div>
           <p class="text-slate-300 text-sm md:text-base leading-relaxed">
             <strong>Onde:</strong> Bloco de Medicina da UFERSA (Biomédicas I e Biomédicas II) - Mossoró/RN.
           </p>
-          <p class="text-slate-300 text-sm md:text-base leading-relaxed">
-            <strong>Horário das Práticas:</strong> 08h às 12h (Sábado e Domingo).
-          </p>
-          <a href="https://www.google.com/maps/search/Bloco+de+Medicina+UFERSA+Mossor%C3%B3/" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition mt-2 shadow-md">
+          <a href="https://www.google.com/maps/search/Bloco+de+Medicina+UFERSA+Mossor%C3%B3/" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl text-sm transition-all shadow-md hover:scale-105 active:scale-95 mt-2">
             Abrir no Google Maps
           </a>
         </div>
-        
-        <!-- FOTO DO PRÉDIO / UFERSA -->
-        <div class="w-full md:w-1/2 rounded-xl overflow-hidden shadow-lg border-2 border-slate-600">
+        <div class="w-full md:w-1/2 rounded-xl overflow-hidden shadow-xl border border-slate-600">
            <img src="https://i.postimg.cc/94bzXVBP/image.jpg" alt="Bloco de Medicina UFERSA" class="w-full h-56 object-cover hover:scale-105 transition duration-500">
         </div>
       </section>
 
-      <!-- Avisos e Requisitos -->
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <!-- Requisitos Obrigatórios -->
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <div class="flex items-center gap-3 mb-4">
           <span class="text-2xl">⚠️</span>
           <h3 class="text-xl font-bold uppercase text-amber-400">Avisos e Requisitos Obrigatórios</h3>
@@ -403,256 +501,257 @@
         <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-4">
           Cada participante deve assistir previamente a todas as videoaulas disponibilizadas no site antes das sessões práticas presenciais em bancada.
         </p>
-        <div class="bg-amber-950/40 border border-amber-600/50 p-4 rounded-lg text-sm text-amber-200">
+        <div class="bg-amber-950/40 border border-amber-600/50 p-4 rounded-xl text-sm text-amber-200 shadow-inner mb-6">
           <strong>Importante:</strong> O cumprimento das atividades preparatórias é obrigatório para a liberação no laboratório.
         </div>
+        <p class="text-slate-300 text-sm md:text-base leading-relaxed font-medium">
+          Contamos com a colaboração e o comprometimento de todos para aproveitarmos ao máximo as atividades teóricas e práticas!<br>
+          Qualquer nova informação será comunicada aqui no grupo. Nos vemos em breve! 🩺🔬
+        </p>
       </section>
+
     </div>
 
-    <!-- ABA: 0. AMBIENTE CIRÚRGICO -->
+    <!-- ABA: AMBIENTE CIRÚRGICO -->
     <div id="centrocirurgico" class="aba-conteudo fade-in hidden space-y-6">
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Ambiente Cirúrgico</h3>
         <p class="text-slate-300 leading-relaxed">
           Estrutura, organização e funcionamento do centro cirúrgico. Conhecimento dos equipamentos, normas de circulação e segurança do paciente no ambiente perioperatório.
         </p>
       </section>
-      <!-- Sem a seção de vídeo -->
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="https://drive.google.com/drive/folders/1k5AeSY8r4WIfHMOaqDZXzJukdlK6AlHK" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+          <a href="https://drive.google.com/drive/folders/1in6QuoqxGjCHXbEAsFmb2JEi1ZNuq1qw" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-6 rounded-xl text-sm transition-all text-center border border-emerald-500/50 uppercase shadow-md hover:scale-[1.02]">Baixar E-book 📄</a>
         </div>
       </section>
-      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+      <section class="bg-emerald-950/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-xl text-center">
         <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
         <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
-        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfEBNjaGe14qf4l0nkqio59-qw80taA1uvrLvPhG0GI1SXANg/viewform?usp=publish-editor" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-8 rounded-xl text-sm transition-all uppercase shadow-lg hover:scale-105 active:scale-95">Acessar Formulário</a>
       </section>
     </div>
 
-    <!-- ABA: 1. PARAMENTAÇÃO -->
+    <!-- ABA: PARAMENTAÇÃO -->
     <div id="paramentacao" class="aba-conteudo fade-in hidden space-y-6">
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Lavagem de Mãos e Paramentação</h3>
         <p class="text-slate-300 leading-relaxed">
           Protocolo rigoroso de higienização das mãos e antissepsia cirúrgica, paramentação com capote estéril e calçamento de luvas estéreis utilizando técnica fechada.
         </p>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
-        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+        <div class="w-full aspect-video bg-slate-900 rounded-xl border border-slate-700 flex items-center justify-center overflow-hidden shadow-inner">
           <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLY64oZwLMHNA" title="Playlist Paramentação" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="https://drive.google.com/drive/folders/1QmS1s8UwUmta2scKYR4Nz4wYY5P4Dr3r" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+          <a href="https://drive.google.com/drive/folders/1QmS1s8UwUmta2scKYR4Nz4wYY5P4Dr3r" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-6 rounded-xl text-sm transition-all text-center border border-emerald-500/50 uppercase shadow-md hover:scale-[1.02]">Baixar E-book 📄</a>
         </div>
       </section>
-      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+      <section class="bg-emerald-950/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-xl text-center">
         <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
         <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
-        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf9UJ1BHsO76ddd66bAPAr7t3dSTaV0iqkRWXiwaqBvPPZTbQ/viewform?usp=publish-editor" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-8 rounded-xl text-sm transition-all uppercase shadow-lg hover:scale-105 active:scale-95">Acessar Formulário</a>
       </section>
     </div>
 
-    <!-- ABA: 2. INSTRUMENTAÇÃO -->
+    <!-- ABA: INSTRUMENTAÇÃO -->
     <div id="instrumentacao" class="aba-conteudo fade-in hidden space-y-6">
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Instrumentação Cirúrgica</h3>
         <p class="text-slate-300 leading-relaxed">
           Reconhecimento, manuseio e correta passagem dos instrumentais básicos: cabos de bisturi, tesouras, pinças hemostáticas e porta-agulhas.
         </p>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
-        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+        <div class="w-full aspect-video bg-slate-900 rounded-xl border border-slate-700 flex items-center justify-center overflow-hidden shadow-inner">
           <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLY6XSs6y42ow" title="Playlist Instrumentação" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="https://drive.google.com/drive/folders/1qqFJgVULnCcg6VDhzLmpgHxY3e_F4q_p" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+          <a href="https://drive.google.com/drive/folders/1qqFJgVULnCcg6VDhzLmpgHxY3e_F4q_p" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-6 rounded-xl text-sm transition-all text-center border border-emerald-500/50 uppercase shadow-md hover:scale-[1.02]">Baixar E-book 📄</a>
         </div>
       </section>
-      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+      <section class="bg-emerald-950/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-xl text-center">
         <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
         <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
-        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSczF4IfA8aRcn11UnvzCaZd-kHp_cHKcQxMRnPGV9LSVCdj-Q/viewform?usp=publish-editor" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-8 rounded-xl text-sm transition-all uppercase shadow-lg hover:scale-105 active:scale-95">Acessar Formulário</a>
       </section>
     </div>
 
-    <!-- ABA: 3. NÓS -->
+    <!-- ABA: NÓS -->
     <div id="nos" class="aba-conteudo fade-in hidden space-y-6">
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Nós Cirúrgicos</h3>
         <p class="text-slate-300 leading-relaxed">
           Treinamento intensivo para a execução segura e firme de nós cirúrgicos fundamentais com o uso das mãos e com o auxílio do porta-agulhas.
         </p>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
-        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+        <div class="w-full aspect-video bg-slate-900 rounded-xl border border-slate-700 flex items-center justify-center overflow-hidden shadow-inner">
           <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLDbwhHe_6478" title="Playlist Nós Cirúrgicos" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="https://drive.google.com/drive/folders/1BfJTv4ZEusimh6Ene_wVh4gYe-RmMUbP" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+          <a href="https://drive.google.com/drive/folders/1BfJTv4ZEusimh6Ene_wVh4gYe-RmMUbP" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-6 rounded-xl text-sm transition-all text-center border border-emerald-500/50 uppercase shadow-md hover:scale-[1.02]">Baixar E-book 📄</a>
         </div>
       </section>
-      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+      <section class="bg-emerald-950/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-xl text-center">
         <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
+        <p class="text-xs text-amber-300 mb-4">* Nota: O formulário avaliativo é o mesmo para os temas de Nós e Sutura.</p>
         <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
-        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGK0J2ID_3ovTM43QBknXr5p5u5gfkxV5qdjjuJoUvMTCa8w/viewform?usp=publish-editor" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-8 rounded-xl text-sm transition-all uppercase shadow-lg hover:scale-105 active:scale-95">Acessar Formulário</a>
       </section>
     </div>
 
-    <!-- ABA: 4. ANESTESIA -->
+    <!-- ABA: ANESTESIA -->
     <div id="anestesia" class="aba-conteudo fade-in hidden space-y-6">
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Princípios de Anestesia Local</h3>
         <p class="text-slate-300 leading-relaxed">
           Abordagem teórica e prática sobre os anestésicos locais mais comuns, doses máximas seguras, técnica de infiltração em campo e bloqueios simples.
         </p>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
-        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+        <div class="w-full aspect-video bg-slate-900 rounded-xl border border-slate-700 flex items-center justify-center overflow-hidden shadow-inner">
           <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLcSQ-PMdQOaM" title="Playlist Anestesia" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="https://drive.google.com/drive/folders/1HbzCpz7iCw93jBthMzGmHe4lBsIdL4lD" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+          <a href="https://drive.google.com/drive/folders/1HbzCpz7iCw93jBthMzGmHe4lBsIdL4lD" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-6 rounded-xl text-sm transition-all text-center border border-emerald-500/50 uppercase shadow-md hover:scale-[1.02]">Baixar E-book 📄</a>
         </div>
       </section>
-      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+      <section class="bg-emerald-950/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-xl text-center">
         <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
         <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
-        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeNoGjyP6Hv2i5pvajMq6Yz-KE7eGjCPkIhU1y8Acy1MUmr4g/viewform?usp=publish-editor" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-8 rounded-xl text-sm transition-all uppercase shadow-lg hover:scale-105 active:scale-95">Acessar Formulário</a>
       </section>
     </div>
 
-    <!-- ABA: 5. SUTURA -->
+    <!-- ABA: SUTURA -->
     <div id="sutura" class="aba-conteudo fade-in hidden space-y-6">
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Técnicas de Sutura</h3>
         <p class="text-slate-300 leading-relaxed">
           Estudo e prática dos principais tipos de pontos cirúrgicos utilizados no fechamento de feridas e tecidos: simples, em "U", contínuo e intradérmico.
         </p>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
-        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+        <div class="w-full aspect-video bg-slate-900 rounded-xl border border-slate-700 flex items-center justify-center overflow-hidden shadow-inner">
           <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLXA3yq2puFX0" title="Playlist Suturas" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="https://drive.google.com/drive/folders/1HfbATyu7FZtTAm90USVSTP4kZvgEgPy1" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+          <a href="https://drive.google.com/drive/folders/1HfbATyu7FZtTAm90USVSTP4kZvgEgPy1" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-6 rounded-xl text-sm transition-all text-center border border-emerald-500/50 uppercase shadow-md hover:scale-[1.02]">Baixar E-book 📄</a>
         </div>
       </section>
-      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+      <section class="bg-emerald-950/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-xl text-center">
         <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
+        <p class="text-xs text-amber-300 mb-4">* Nota: O formulário avaliativo é o mesmo para os temas de Nós e Sutura.</p>
         <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
-        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGK0J2ID_3ovTM43QBknXr5p5u5gfkxV5qdjjuJoUvMTCa8w/viewform?usp=publish-editor" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-8 rounded-xl text-sm transition-all uppercase shadow-lg hover:scale-105 active:scale-95">Acessar Formulário</a>
       </section>
     </div>
 
-    <!-- ABA: 6. INTUBAÇÃO -->
+    <!-- ABA: INTUBAÇÃO -->
     <div id="intubacao" class="aba-conteudo fade-in hidden space-y-6">
-      <!-- AVISO: EM BREVE -->
-      <section class="bg-gradient-to-r from-amber-600/20 to-amber-900/40 border border-amber-500/50 rounded-2xl p-6 shadow-lg text-center flex flex-col items-center justify-center">
-        <span class="text-4xl mb-2">🚧</span>
-        <h2 class="text-2xl font-extrabold text-amber-400 uppercase tracking-widest">Em Breve</h2>
-        <p class="text-slate-300 text-sm mt-2">O conteúdo desta aba estará disponível logo logo.</p>
-      </section>
 
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-2xl font-bold text-emerald-400 uppercase mb-4">Intubação Orotraqueal</h3>
         <p class="text-slate-300 leading-relaxed">
           Diretrizes e demonstração da via aérea avançada, manuseio do laringoscópio, posicionamento adequado e técnica de introdução do tubo orotraqueal.
         </p>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4 flex items-center gap-2">▶ Videoaula</h3>
-        <div class="w-full aspect-video bg-slate-900 rounded-lg border border-slate-600 flex items-center justify-center overflow-hidden shadow-inner">
+        <div class="w-full aspect-video bg-slate-900 rounded-xl border border-slate-700 flex items-center justify-center overflow-hidden shadow-inner">
           <iframe class="w-full h-full" src="https://www.youtube.com/embed/videoseries?list=PLX-G2QNSonNI" title="Playlist Intubação" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
       </section>
-      <section class="bg-slate-800/80 rounded-2xl p-6 md:p-8 border border-slate-700 shadow-lg">
+      <section class="bg-slate-800/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-slate-700/80 shadow-xl">
         <h3 class="text-xl font-bold text-slate-100 uppercase mb-4">📄 Materiais de Apoio</h3>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="https://drive.google.com/drive/folders/1k5AeSY8r4WIfHMOaqDZXzJukdlK6AlHK" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg text-sm transition text-center border border-emerald-500 uppercase">Baixar E-book 📄</a>
+          <a href="https://drive.google.com/drive/folders/1k5AeSY8r4WIfHMOaqDZXzJukdlK6AlHK" target="_blank" class="flex-1 bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-6 rounded-xl text-sm transition-all text-center border border-emerald-500/50 uppercase shadow-md hover:scale-[1.02]">Baixar E-book 📄</a>
         </div>
       </section>
-      <section class="bg-emerald-900/30 rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-lg text-center">
+      <section class="bg-emerald-950/40 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-emerald-700/50 shadow-xl text-center">
         <h3 class="text-xl font-bold text-emerald-400 uppercase mb-2">Questões (Forms)</h3>
         <p class="text-sm text-slate-300 mb-6">Responda ao formulário para registrar sua presença.</p>
-        <a href="https://drive.google.com/drive/folders/1IkHVFQmPjwqAuz4kDI1mX9-hF8ealqy2" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg text-sm transition uppercase">Acessar Formulário</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScOfQahqvUqeE8blAbLSQN7UyFZ-0mIrZN8mi8KfXvUUTgnPg/viewform?usp=publish-editor" target="_blank" class="inline-block bg-[#2D6A4F] hover:bg-emerald-600 text-white font-bold py-3.5 px-8 rounded-xl text-sm transition-all uppercase shadow-lg hover:scale-105 active:scale-95">Acessar Formulário</a>
       </section>
     </div>
 
   </main>
 
   <!-- Botão Flutuante: Voltar ao Topo -->
-  <button id="btn-topo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 right-6 bg-[#2D6A4F] hover:bg-emerald-600 text-white rounded-full p-3 shadow-xl transition-all duration-300 opacity-0 pointer-events-none z-50">
+  <button id="btn-topo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-6 right-6 bg-[#2D6A4F] hover:bg-emerald-600 text-white rounded-full p-3.5 shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 hover:scale-110 active:scale-90 border border-emerald-400/30">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
     </svg>
   </button>
 
-  <!-- Rodapé com Redes Sociais e Créditos -->
-  <footer class="bg-[#0A2942] border-t border-slate-700 py-8 text-slate-400 mt-auto">
+  <!-- Rodapé -->
+  <footer class="bg-[#0A2942] border-t border-slate-700/80 py-8 text-slate-400 mt-auto">
     <div class="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
-      
-      <!-- Contatos -->
       <div class="flex flex-col gap-3 text-sm">
-        <a href="https://www.instagram.com/tecnicascirurgicas.ufersa?igsi=c21vejJ0NXQwdTB0" target="_blank" class="flex items-center gap-2 hover:text-emerald-400 transition">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <a href="https://www.instagram.com/tecnicascirurgicas.ufersa?igsi=c21vejJ0NXQwdTB0" target="_blank" class="flex items-center gap-2.5 hover:text-emerald-400 transition-colors">
+          <svg class="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 1.76-6.98 6.208-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.2 4.453 2.625 6.008 6.98 6.208 1.28.058 1.688.072 4.947.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-1.756 6.979-6.208.059-1.28.073-1.689.073-4.947 0-3.259-.014-3.667-.072-4.947-.196-4.453-2.624-6.008-6.979-6.208-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
           </svg>
           @tecnicascirurgicas.ufersa
         </a>
-        <a href="mailto:cursocirurgiaufersa@gmail.com" class="flex items-center gap-2 hover:text-emerald-400 transition">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <a href="mailto:cursocirurgiaufersa@gmail.com" class="flex items-center gap-2.5 hover:text-emerald-400 transition-colors">
+          <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
           </svg>
           cursocirurgiaufersa@gmail.com
         </a>
       </div>
 
-      <!-- Direitos e Créditos -->
-      <div class="text-center md:text-right text-xs">
+      <div class="text-center md:text-right text-xs space-y-1">
         <p>© 2026 Semioliga e LATC (UFERSA) • Todos os direitos reservados</p>
-        <p class="mt-2 text-slate-500">Desenvolvido por Rafael Belo Cavalcante Linhares</p>
+        <p class="text-slate-500 font-medium">Desenvolvido por Rafael Belo Cavalcante Linhares</p>
       </div>
-
     </div>
   </footer>
 
-  <!-- SCRIPT PARA TROCAR AS ABAS, FUNCIONAR O CARROSSEL E O MENU SUSPENSO -->
+  <!-- SCRIPT -->
   <script>
-    // Função para abrir e fechar o menu suspenso
+    // Função para abrir e fechar o menu suspenso mobile
     function toggleMenu() {
       const menu = document.getElementById('menu-suspenso');
-      if (menu.classList.contains('hidden')) {
-        menu.classList.remove('hidden');
-        menu.classList.add('flex');
-      } else {
+      menu.classList.toggle('hidden');
+      menu.classList.toggle('flex');
+    }
+
+    // Fechar menu ao clicar fora dele
+    window.addEventListener('click', (e) => {
+      const menu = document.getElementById('menu-suspenso');
+      const btnHamburguer = document.getElementById('btn-hamburguer');
+      if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !btnHamburguer.contains(e.target)) {
         menu.classList.add('hidden');
         menu.classList.remove('flex');
       }
-    }
+    });
 
-    // Função para alterar abas do menu
+    // Função para alterar abas do menu de forma fluida
     function mudarAba(idDaAba) {
       // Oculta todas as abas
       const abas = document.querySelectorAll('.aba-conteudo');
@@ -660,43 +759,49 @@
         aba.classList.add('hidden');
         aba.classList.remove('block');
       });
+      
       // Mostra a aba clicada
       const abaAtiva = document.getElementById(idDaAba);
-      abaAtiva.classList.remove('hidden');
-      abaAtiva.classList.add('block');
+      if (abaAtiva) {
+        abaAtiva.classList.remove('hidden');
+        abaAtiva.classList.add('block');
+      }
       
       // Destacar o botão ativo no Menu Desktop
       document.querySelectorAll('.nav-btn-desktop').forEach(btn => {
-        btn.classList.remove('text-emerald-400', 'border-emerald-400');
-        btn.classList.add('text-white', 'border-transparent');
+        btn.classList.remove('text-emerald-400', 'bg-slate-800/60', 'border-emerald-500/30');
+        btn.classList.add('text-slate-300', 'border-transparent');
       });
       const btnAtivoDesktop = document.getElementById('nav-desktop-' + idDaAba);
       if(btnAtivoDesktop) {
-        btnAtivoDesktop.classList.remove('text-white', 'border-transparent');
-        btnAtivoDesktop.classList.add('text-emerald-400', 'border-emerald-400');
+        btnAtivoDesktop.classList.remove('text-slate-300', 'border-transparent');
+        btnAtivoDesktop.classList.add('text-emerald-400', 'bg-slate-800/60', 'border-emerald-500/30');
       }
 
       // Destacar o botão ativo no Menu Mobile
       document.querySelectorAll('.nav-btn-mobile').forEach(btn => {
-        btn.classList.remove('text-emerald-400', 'bg-slate-700');
+        btn.classList.remove('text-emerald-400', 'bg-slate-800');
       });
       const btnAtivoMobile = document.getElementById('nav-mobile-' + idDaAba);
       if(btnAtivoMobile) {
-        btnAtivoMobile.classList.add('text-emerald-400', 'bg-slate-700');
+        btnAtivoMobile.classList.add('text-emerald-400', 'bg-slate-800');
       }
       
-      // Fechar o menu suspenso automaticamente após clicar em uma aba (mobile)
+      // Fechar o menu suspenso após clicar em uma aba (mobile)
       const menu = document.getElementById('menu-suspenso');
       if (!menu.classList.contains('hidden')) {
         menu.classList.add('hidden');
         menu.classList.remove('flex');
       }
+
+      // Rolar suavemente para o topo do conteúdo ao trocar de aba
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // Controle de exibição do Botão "Voltar ao Topo"
     window.addEventListener('scroll', () => {
       const btnTopo = document.getElementById('btn-topo');
-      if (window.scrollY > 300) {
+      if (window.scrollY > 350) {
         btnTopo.classList.remove('opacity-0', 'pointer-events-none');
         btnTopo.classList.add('opacity-100', 'pointer-events-auto');
       } else {
@@ -708,7 +813,7 @@
     // Função para controlar a rolagem manual do carrossel de monitores
     function rolarCarrossel(direcao) {
       const track = document.getElementById('carrossel-equipe');
-      const scrollAmount = track.offsetWidth; 
+      const scrollAmount = track.offsetWidth * 0.8; 
       
       if (direcao === 'esq') {
         track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
@@ -717,18 +822,17 @@
       }
     }
 
-    // Auto-scroll do carrossel (a cada 3,5 segundos)
+    // Auto-scroll contínuo e suave do carrossel (a cada 3,5 segundos)
     setInterval(() => {
       const track = document.getElementById('carrossel-equipe');
       const abaInicio = document.getElementById('inicio');
       
-      // Só rola se a aba Início estiver visível
       if (abaInicio && !abaInicio.classList.contains('hidden')) {
-        // Se chegou no final, volta para o início
+        // Se chegou ao final, volta suavemente para o início
         if (track.scrollLeft + track.offsetWidth >= track.scrollWidth - 10) {
           track.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-          track.scrollBy({ left: track.offsetWidth, behavior: 'smooth' });
+          track.scrollBy({ left: track.offsetWidth * 0.8, behavior: 'smooth' });
         }
       }
     }, 3500);
